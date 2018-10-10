@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8d9996e9-ed06-4e2a-9701-892ae3659f68" name="Default Changelist" comment="" />
+    <list default="true" id="8d9996e9-ed06-4e2a-9701-892ae3659f68" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hello.py" beforeDir="false" afterPath="$PROJECT_DIR$/hello.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,21 +32,25 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="263" />
-          <entry key="py" value="1251" />
+          <entry key="html" value="65" />
+          <entry key="py" value="1285" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="1514" />
+          <entry key="HTML" value="65" />
+          <entry key="Python" value="1548" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+          <entry key="html" value="2" />
           <entry key="py" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+          <entry key="HTML" value="2" />
           <entry key="Python" value="2" />
         </counts>
       </usages-collector>
@@ -62,20 +71,37 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hello.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="62" column="17" lean-forward="true" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
+            <state relative-caret-position="440">
+              <caret line="38" column="3" lean-forward="true" selection-start-line="38" selection-start-column="3" selection-end-line="38" selection-end-column="3" />
               <folding>
                 <element signature="e#143#197#0" expanded="true" />
-                <marker date="1539184729668" expanded="true" signature="422:427" ph="..." />
-                <marker date="1539184729668" expanded="true" signature="490:495" ph="..." />
-                <marker date="1539184729668" expanded="true" signature="694:826" ph="..." />
-                <marker date="1539184729668" expanded="true" signature="868:869" ph="..." />
-                <marker date="1539184729668" expanded="true" signature="868:873" ph="..." />
-                <marker date="1539184729668" expanded="true" signature="1185:1190" ph="..." />
+                <marker date="1539187539447" expanded="true" signature="448:453" ph="..." />
+                <marker date="1539187539447" expanded="true" signature="657:789" ph="..." />
+                <marker date="1539187539447" expanded="true" signature="831:832" ph="..." />
+                <marker date="1539187539447" expanded="true" signature="831:836" ph="..." />
+                <marker date="1539187539447" expanded="true" signature="1157:1162" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="10" column="7" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/user.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="2" column="14" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -87,14 +113,20 @@
       <list>
         <option value="Flask Main" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app.py" />
+        <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/hello.py" />
+        <option value="$PROJECT_DIR$/templates/user.html" />
       </list>
     </option>
   </component>
@@ -104,11 +136,13 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="136" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="513" />
+    <option name="y" value="10" />
     <option name="width" value="1000" />
     <option name="height" value="735" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -129,6 +163,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -227,10 +262,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="136" y="0" width="1000" height="735" extended-state="1" />
+    <frame x="402" y="1" width="1000" height="735" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.1798995" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15957446" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -244,7 +279,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5010638" side_tool="true" weight="0.71953255" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.31051752" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.015075377" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.37228715" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -278,19 +313,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="7" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/hello.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="62" column="17" lean-forward="true" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
+        <state relative-caret-position="440">
+          <caret line="38" column="3" lean-forward="true" selection-start-line="38" selection-start-column="3" selection-end-line="38" selection-end-column="3" />
           <folding>
             <element signature="e#143#197#0" expanded="true" />
-            <marker date="1539184729668" expanded="true" signature="422:427" ph="..." />
-            <marker date="1539184729668" expanded="true" signature="490:495" ph="..." />
-            <marker date="1539184729668" expanded="true" signature="694:826" ph="..." />
-            <marker date="1539184729668" expanded="true" signature="868:869" ph="..." />
-            <marker date="1539184729668" expanded="true" signature="868:873" ph="..." />
-            <marker date="1539184729668" expanded="true" signature="1185:1190" ph="..." />
+            <marker date="1539187539447" expanded="true" signature="448:453" ph="..." />
+            <marker date="1539187539447" expanded="true" signature="657:789" ph="..." />
+            <marker date="1539187539447" expanded="true" signature="831:832" ph="..." />
+            <marker date="1539187539447" expanded="true" signature="831:836" ph="..." />
+            <marker date="1539187539447" expanded="true" signature="1157:1162" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/user.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="14" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
         </state>
       </provider>
     </entry>

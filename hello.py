@@ -10,20 +10,16 @@ from flask import abort
 
 # Flask-Script是一个Flask扩展，为flask程序添加了一个命令行解释器
 from flask_script import Manager
-
+from flask import render_template
 
 app = Flask(__name__)
 manager = Manager(app)  # 专为flask开发的扩展都暴露在flask.ext命名空间中
 
 
-@app.route('/index')
-def index_page():
-    return '<h1>Hello World!</h1>'
-
 @app.route('/')
 def bad_page():
     #return '<h1>Bad request</h1>',400   # 该视图函数返回一个400状态码
-    return redirect('/index')   # 用于处理重定向
+    return redirect('/index.html')   # 用于处理重定向
 
 @app.route('/cookie')
 def cookie_page():
@@ -37,7 +33,7 @@ def cookie_page():
 
 @app.route('/user/<name>')
 def user(name):
-    return '<h1>Hello , %s!</h1>' % name
+    return render_template('user.html',name=name)
 
 
 """
