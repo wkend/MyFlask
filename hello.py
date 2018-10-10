@@ -15,9 +15,21 @@ from flask import render_template
 app = Flask(__name__)
 manager = Manager(app)  # 专为flask开发的扩展都暴露在flask.ext命名空间中
 
+@app.route('/')
+def index_page():
+    '''
+    利用模板来对请求进行初始化响应
+    :return:
+    '''
+    return render_template('index.html')
+
 
 @app.route('/')
 def bad_page():
+    '''
+    利用重定向来处理错误的路径请求
+    :return:
+    '''
     #return '<h1>Bad request</h1>',400   # 该视图函数返回一个400状态码
     return redirect('/index.html')   # 用于处理重定向
 
@@ -49,10 +61,6 @@ def get_user(id):
         abort(404)  # abort不会把控制权交给调用它的函数，而是抛出异常把控制权交给web服务器
     return '<h1>Hello, %s</h1>',% user.name
 """
-
-
-
-
 
 
 if __name__ == '__main__':
