@@ -4,6 +4,7 @@
 # @Author  : wkend
 # @File    : hello.py
 # @Software: PyCharm
+from datetime import datetime
 
 from flask import Flask,request,make_response,redirect
 from flask import abort
@@ -12,11 +13,13 @@ from flask import abort
 from flask_script import Manager
 from flask import render_template
 from flask_bootstrap import Bootstrap
-from flask_nav import Nav
+from flask_moment import Moment
 
 app = Flask(__name__)
 manager = Manager(app)  # 专为flask开发的扩展都暴露在flask.ext命名空间中
 bootstrap = Bootstrap(app)  #初始化Bootstrap 是客户端框架对象
+moment = Moment(app)    # 引入 moment.js,渲染本地日期和时间
+
 
 @app.route('/')
 def index_page():
@@ -24,7 +27,8 @@ def index_page():
     利用模板来对请求进行初始化响应
     :return:
     '''
-    return render_template('index.html')
+    # 把current_time模板进行渲染
+    return render_template('index.html',current_time=datetime.utcnow())
 
 
 @app.route('/')

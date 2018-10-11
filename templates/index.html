@@ -6,6 +6,9 @@
     <title>Welcome</title>
 </head>
 <body>
-
+    <!--在模板中渲染 current_time，使用 Flask-Moment 渲染时间戳-->
+    <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
+    <!--时间推移更新时间-->
+    <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
 </body>
 </html>
