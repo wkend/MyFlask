@@ -11,9 +11,12 @@ from flask import abort
 # Flask-Script是一个Flask扩展，为flask程序添加了一个命令行解释器
 from flask_script import Manager
 from flask import render_template
+from flask_bootstrap import Bootstrap
+
 
 app = Flask(__name__)
 manager = Manager(app)  # 专为flask开发的扩展都暴露在flask.ext命名空间中
+bootstrap = Bootstrap(app)  #初始化Bootstrap 是客户端框架对象
 
 @app.route('/')
 def index_page():
