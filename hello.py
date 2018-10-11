@@ -12,7 +12,7 @@ from flask import abort
 from flask_script import Manager
 from flask import render_template
 from flask_bootstrap import Bootstrap
-
+from flask_nav import Nav
 
 app = Flask(__name__)
 manager = Manager(app)  # 专为flask开发的扩展都暴露在flask.ext命名空间中
@@ -67,4 +67,4 @@ def get_user(id):
 
 
 if __name__ == '__main__':
-    manager.run()
+    app.run(debug=True)
