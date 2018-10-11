@@ -36,6 +36,26 @@ def bad_page():
     #return '<h1>Bad request</h1>',400   # 该视图函数返回一个400状态码
     return redirect('/index.html')   # 用于处理重定向
 
+
+@app.errorhandler(404)
+def page_not_found(e):
+    '''
+    自定义错误页面,404错误
+    :param e:
+    :return:
+    '''
+    return render_template('404.html'),404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    '''
+    500错误页面
+    :return:
+    '''
+    return render_template('500.html'),500
+
+
+
 @app.route('/cookie')
 def cookie_page():
     '''
