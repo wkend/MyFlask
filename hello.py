@@ -13,6 +13,9 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 # Flask-Script是一个Flask扩展，为flask程序添加了一个命令行解释器
 from flask_script import Manager
+from flask_script import Shell
+
+
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -64,6 +67,7 @@ def index_page():
     """
     # 把current_time模板进行渲染
     # render_template('index.html', current_time=datetime.utcnow())
+    """
     form = NameForm()
     if form.validate_on_submit():  # 判断用户输入的数据是否能被所有用户所接受，若能，则返回true
         old_name = session.get('name')
@@ -75,6 +79,33 @@ def index_page():
         # 况下，路由的端点是相应视图函数的名字
         return redirect(url_for('index_page'))
     return render_template('index.html', current_time=datetime.utcnow(), form=form, name=session.get('name'))
+    """
+
+    # 在视图函数中操作数据库
+    form = NameForm()
+    if form.validate_on_submit():
+        # 利用过滤器进行数据库符查询
+        user = User.query.filter_by(username=form.name.data).first()
+        if user is None:
+            user = User(username=form.name.data)
+            db.session.add(user)    #向数据库中添加数据
+            session['know'] = False
+        else:
+            session['know'] = True
+        session['name'] = form.name.data
+        form.name.data = ''
+        return redirect(url_for('index_page'))
+    return render_template('index.html', current_time=datetime.utcnow(), form=form, name=session.get('name'),know=session.get('know',False))
+
+# 为shell命令添加一个上下文，为shell命令注册一个回调函数
+def make_shell_context():
+    """
+    我们可以做些配置，让 Flask-Script的shell命令自动导入特定的对象
+    该函数注册了程序，数据库实例以及模型，因此这些数据能直接导入shell
+    :return:
+    """
+    return dict(app=app,db=db,User=User,Role=Role)
+manager.add_command("shell",Shell(make_shell_context))
 
 
 @app.errorhandler(404)
@@ -144,7 +175,7 @@ class Role(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(64),unique=True)
     # 建立关系，第一个参数代表关系的另一端是哪个模型，backref向User模型中添加一个role属性
-    users = db.relationship('User',backref='role')
+    users = db.relationship('User',backref='role',lazy='dynamic')
 
     def __repr__(self):
         return '<Role %r>' % self.name
@@ -153,7 +184,7 @@ class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(64),unique=True,index=True)
-    # 添加到User模型中的列role.id被定义为外键，就是这个外键建立了联系
+    # 添加到User模型中的列role.id被定义为外键，就是这个外键建立了联系,lazy参数取消自助执行查询
     role_id = db.Column(db.Integer,db.ForeignKey('role.id'))
 
     def __repr__(self):
