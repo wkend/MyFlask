@@ -7,19 +7,19 @@
 from datetime import datetime
 
 import flask
-from flask import render_template
+from flask import render_template,flash,session,redirect,url_for
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 # Flask-Script是一个Flask扩展，为flask程序添加了一个命令行解释器
 from flask_script import Manager
 
 # 定义表单类
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import  DataRequired
 
 
-class NameForm(Form):
+class NameForm(FlaskForm):
     """
     使用Flask-WTF时，每个Web表单都由一个继承自Form的类表示。这个类定义表单中的
     一组字段，每个字段都用对象表示。字段对象可附属一个或对个验证函数，验证函数用来
@@ -41,25 +41,29 @@ manager = Manager(app)  # 专为flask开发的扩展都暴露在flask.ext命名�
 bootstrap = Bootstrap(app)  # 初始化Bootstrap 是客户端框架对象
 moment = Moment(app)  # 引入 moment.js,渲染本地日期和时间
 
-
-@app.route('/')
+# methods参数告诉flask在url映射中把这个视图函数注册为GET，POST请求的处理程序
+# 如果没指定，则认为注册为GET请求的处理函数
+@app.route('/',methods=['GET','POST'])
 def index_page():
     """
     利用模板来对请求进行初始化响应
+    在视图函数中处理表单
+    重定向和用户会话
     :return:
     """
     # 把current_time模板进行渲染
-    return render_template('index.html', current_time=datetime.utcnow())
-
-
-@app.route('/')
-def bad_page():
-    """
-    利用重定向来处理错误的路径请求
-    :return:
-    """
-    # return '<h1>Bad request</h1>',400   # 该视图函数返回一个400状态码
-    return flask.redirect('/index.html')  # 用于处理重定向
+    # render_template('index.html', current_time=datetime.utcnow())
+    form = NameForm()
+    if form.validate_on_submit():  # 判断用户输入的数据是否能被所有用户所接受，若能，则返回true
+        old_name = session.get('name')
+        if old_name is not None and old_name != form.name.name:
+            flash('Looks like you have changed your name!')
+        session['name'] = form.name.data  # 获取name值,并保存在会话中
+        # 使用url_for生成路由，保证 URL 和定义的路由兼容，而且修改路由名字后依然可用，
+        # url_for() 函数的第一个且唯一必须指定的参数是端点名，即路由的内部名字。默认情
+        # 况下，路由的端点是相应视图函数的名字
+        return redirect(url_for('index_page'))
+    return render_template('index.html', current_time=datetime.utcnow(), form=form, name=session.get('name'))
 
 
 @app.errorhandler(404)
@@ -109,6 +113,18 @@ def get_user(id):
         abort(404)  # abort不会把控制权交给调用它的函数，而是抛出异常把控制权交给web服务器
     return '<h1>Hello, %s</h1>',% user.name
 """
+
+"""
+@app.route('/')
+def bad_page():
+    '''
+    利用重定向来处理错误的路径请求
+    :return:
+    '''
+    # return '<h1>Bad request</h1>',400   # 该视图函数返回一个400状态码
+    # return flask.redirect('/index.html')  # 用于处理重定向
+"""
+
 
 if __name__ == '__main__':
     app.run(debug=True)
