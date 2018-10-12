@@ -4,6 +4,7 @@
 # @Author  : wkend
 # @File    : hello.py
 # @Software: PyCharm
+import os
 from datetime import datetime
 
 import flask
@@ -12,6 +13,9 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 # Flask-Script是一个Flask扩展，为flask程序添加了一个命令行解释器
 from flask_script import Manager
+
+from flask_sqlalchemy import SQLAlchemy
+
 
 # 定义表单类
 from flask_wtf import FlaskForm
@@ -40,6 +44,13 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 manager = Manager(app)  # 专为flask开发的扩展都暴露在flask.ext命名空间中
 bootstrap = Bootstrap(app)  # 初始化Bootstrap 是客户端框架对象
 moment = Moment(app)  # 引入 moment.js,渲染本地日期和时间
+
+# 配置数据库
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///'+os.path.join(basedir,'data.sqlite')
+app.config['SQLCHEMY_COMMIT_ON_TEARDOWN'] = True
+db = SQLAlchemy(app)
+
 
 # methods参数告诉flask在url映射中把这个视图函数注册为GET，POST请求的处理程序
 # 如果没指定，则认为注册为GET请求的处理函数
@@ -124,6 +135,31 @@ def bad_page():
     # return '<h1>Bad request</h1>',400   # 该视图函数返回一个400状态码
     # return flask.redirect('/index.html')  # 用于处理重定向
 """
+
+"""通过定义类来定义模型"""
+
+# 定义Role模型
+class Role(db.Model):
+    __tablename__ = 'role'
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(64),unique=True)
+
+    def __repr__(self):
+        return '<Role %r>' % self.name
+
+class User(db.Model):
+    __tablename__ = 'user'
+    id = db.Column(db.Integer,primary_key=True)
+    username = db.Column(db.String(64),unique=True,index=True)
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+
+
+
+
+
 
 
 if __name__ == '__main__':
