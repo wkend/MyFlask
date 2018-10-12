@@ -143,6 +143,8 @@ class Role(db.Model):
     __tablename__ = 'role'
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(64),unique=True)
+    # 建立关系，第一个参数代表关系的另一端是哪个模型，backref向User模型中添加一个role属性
+    users = db.relationship('User',backref='role')
 
     def __repr__(self):
         return '<Role %r>' % self.name
@@ -151,6 +153,8 @@ class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(64),unique=True,index=True)
+    # 添加到User模型中的列role.id被定义为外键，就是这个外键建立了联系
+    role_id = db.Column(db.Integer,db.ForeignKey('role.id'))
 
     def __repr__(self):
         return '<User %r>' % self.username
