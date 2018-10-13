@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8d9996e9-ed06-4e2a-9701-892ae3659f68" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Administrator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Administrator.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hello.py" beforeDir="false" afterPath="$PROJECT_DIR$/hello.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,14 +52,14 @@
           <entry key="html" value="1882" />
           <entry key="md" value="44" />
           <entry key="py" value="4901" />
-          <entry key="txt" value="251" />
+          <entry key="txt" value="262" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="1882" />
           <entry key="Markdown" value="44" />
-          <entry key="PLAIN_TEXT" value="251" />
+          <entry key="PLAIN_TEXT" value="262" />
           <entry key="Python" value="5715" />
         </counts>
       </usages-collector>
@@ -109,8 +108,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+            <state relative-caret-position="222">
+              <caret line="32" column="10" lean-forward="true" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
               <folding>
                 <marker date="1539420397268" expanded="true" signature="435:1341" ph="..." />
               </folding>
@@ -187,8 +186,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="273" />
-    <option name="y" value="3" />
+    <option name="x" value="417" />
     <option name="width" value="890" />
     <option name="height" value="735" />
   </component>
@@ -470,7 +468,21 @@
       <option name="project" value="LOCAL" />
       <updated>1539419442519</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="add config file">
+      <created>1539420438790</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1539420438790</updated>
+    </task>
+    <task id="LOCAL-00020" summary="add config file">
+      <created>1539420627830</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1539420627830</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
@@ -483,16 +495,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="568" y="6" width="799" height="735" extended-state="0" />
+    <frame x="417" y="0" width="890" height="735" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4991119" weight="0.18835099" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4991119" visible="true" weight="0.24698795" />
       <window_info id="Structure" order="1" sideWeight="0.5008881" side_tool="true" weight="0.21406959" />
       <window_info id="Favorites" order="2" sideWeight="0.5008881" side_tool="true" weight="0.21406959" />
       <window_info id="Database" order="3" weight="0.25886524" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32663316" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4969743" visible="true" weight="0.07537688" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4969743" visible="true" weight="0.07537688" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.44705883" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -579,7 +591,8 @@
     <MESSAGE value="Integrate python shell" />
     <MESSAGE value="create migrate repertory" />
     <MESSAGE value="add mail" />
-    <option name="LAST_COMMIT_MESSAGE" value="add mail" />
+    <MESSAGE value="add config file" />
+    <option name="LAST_COMMIT_MESSAGE" value="add config file" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/templates/sample.html" />
@@ -678,8 +691,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="222">
+          <caret line="32" column="10" lean-forward="true" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
           <folding>
             <marker date="1539420397268" expanded="true" signature="435:1341" ph="..." />
           </folding>
