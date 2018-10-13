@@ -3,6 +3,7 @@
     <words>
       <w>flasky</w>
       <w>navbar</w>
+      <w>smtp</w>
       <w>sqlalchemy</w>
       <w>tablename</w>
       <w>utcnow</w>
