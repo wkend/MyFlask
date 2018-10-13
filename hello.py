@@ -6,28 +6,18 @@
 # @Software: PyCharm
 import os
 from datetime import datetime
-
 import flask
 from flask import render_template,flash,session,redirect,url_for
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
-# Flask-Script是一个Flask扩展，为flask程序添加了一个命令行解释器
 from flask_script import Manager
 from flask_script import Shell
 from flask_mail import Mail,Message
 from flask_sqlalchemy import SQLAlchemy
 from threading import Thread
-
-# 定义表单类
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import  DataRequired
-
-
-
-
-
-
 
 class NameForm(FlaskForm):
     """
