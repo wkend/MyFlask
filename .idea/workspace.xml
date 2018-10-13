@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8d9996e9-ed06-4e2a-9701-892ae3659f68" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.sqlite" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/hello.py" beforeDir="false" afterPath="$PROJECT_DIR$/hello.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,16 +53,16 @@
           <entry key="Python Console" value="814" />
           <entry key="html" value="1882" />
           <entry key="md" value="44" />
-          <entry key="py" value="3904" />
-          <entry key="txt" value="228" />
+          <entry key="py" value="4547" />
+          <entry key="txt" value="243" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="1882" />
           <entry key="Markdown" value="44" />
-          <entry key="PLAIN_TEXT" value="228" />
-          <entry key="Python" value="4718" />
+          <entry key="PLAIN_TEXT" value="243" />
+          <entry key="Python" value="5361" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -92,14 +93,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hello.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
+            <state relative-caret-position="273">
+              <caret line="236" column="56" selection-start-line="236" selection-start-column="56" selection-end-line="236" selection-end-column="56" />
               <folding>
                 <element signature="e#142#151#0" expanded="true" />
-                <marker date="1539414343782" expanded="true" signature="648:1041" ph="..." />
-                <marker date="1539414343782" expanded="true" signature="1840:3495" ph="..." />
-                <marker date="1539414343782" expanded="true" signature="3756:3844" ph="..." />
-                <marker date="1539414343782" expanded="true" signature="5040:5375" ph="..." />
+                <marker date="1539419270148" expanded="true" signature="709:1102" ph="..." />
+                <marker date="1539419270148" expanded="true" signature="2257:4048" ph="..." />
+                <marker date="1539419270148" expanded="true" signature="4309:4397" ph="..." />
+                <marker date="1539419270148" expanded="true" signature="5593:6592" ph="..." />
+                <marker date="1539419270148" expanded="true" signature="6530:6592" ph="..." />
               </folding>
             </state>
           </provider>
@@ -172,10 +174,10 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="289" />
-    <option name="y" value="4" />
-    <option name="width" value="906" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="259" />
+    <option name="y" value="2" />
+    <option name="width" value="1176" />
     <option name="height" value="735" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -193,6 +195,11 @@
               <item name="MyFlask" type="b2602c69:ProjectViewProjectNode" />
               <item name="MyFlask" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="MyFlask" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MyFlask" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -204,7 +211,7 @@
     <property name="ChangesTree.GroupingKeys" value="" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../flasky" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
@@ -435,7 +442,21 @@
       <option name="project" value="LOCAL" />
       <updated>1539361143626</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="create migrate repertory">
+      <created>1539414481921</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1539414481921</updated>
+    </task>
+    <task id="LOCAL-00017" summary="create migrate repertory">
+      <created>1539414502980</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1539414502980</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
@@ -448,15 +469,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="572" y="4" width="906" height="735" extended-state="0" />
+    <frame x="435" y="11" width="1176" height="735" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4991119" weight="0.1913767" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4991119" weight="0.24940899" />
       <window_info id="Structure" order="1" sideWeight="0.5008881" side_tool="true" weight="0.21406959" />
       <window_info id="Favorites" order="2" sideWeight="0.5008881" side_tool="true" weight="0.21406959" />
-      <window_info id="Database" order="3" weight="0.25945538" />
+      <window_info id="Database" order="3" weight="0.25886524" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3283082" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32663316" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4969743" weight="0.24455611" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.44705883" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -466,7 +487,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.7639939" weight="0.4339934" />
       <window_info anchor="bottom" id="Database Changes" order="9" weight="0.32838285" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5030257" side_tool="true" weight="0.3679868" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4969743" visible="true" weight="0.1557789" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4969743" visible="true" weight="0.10050251" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.089108914" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -542,7 +563,8 @@
     <MESSAGE value="add relationship" />
     <MESSAGE value="add database operate" />
     <MESSAGE value="Integrate python shell" />
-    <option name="LAST_COMMIT_MESSAGE" value="Integrate python shell" />
+    <MESSAGE value="create migrate repertory" />
+    <option name="LAST_COMMIT_MESSAGE" value="create migrate repertory" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/templates/sample.html" />
@@ -626,14 +648,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hello.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="65" column="39" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
+        <state relative-caret-position="273">
+          <caret line="236" column="56" selection-start-line="236" selection-start-column="56" selection-end-line="236" selection-end-column="56" />
           <folding>
             <element signature="e#142#151#0" expanded="true" />
-            <marker date="1539414343782" expanded="true" signature="648:1041" ph="..." />
-            <marker date="1539414343782" expanded="true" signature="1840:3495" ph="..." />
-            <marker date="1539414343782" expanded="true" signature="3756:3844" ph="..." />
-            <marker date="1539414343782" expanded="true" signature="5040:5375" ph="..." />
+            <marker date="1539419270148" expanded="true" signature="709:1102" ph="..." />
+            <marker date="1539419270148" expanded="true" signature="2257:4048" ph="..." />
+            <marker date="1539419270148" expanded="true" signature="4309:4397" ph="..." />
+            <marker date="1539419270148" expanded="true" signature="5593:6592" ph="..." />
+            <marker date="1539419270148" expanded="true" signature="6530:6592" ph="..." />
           </folding>
         </state>
       </provider>

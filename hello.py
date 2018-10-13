@@ -14,11 +14,9 @@ from flask_moment import Moment
 # Flask-Script是一个Flask扩展，为flask程序添加了一个命令行解释器
 from flask_script import Manager
 from flask_script import Shell
-
-
-
+from flask_mail import Mail,Message
 from flask_sqlalchemy import SQLAlchemy
-
+from threading import Thread
 
 # 定义表单类
 from flask_wtf import FlaskForm
@@ -65,6 +63,19 @@ from flask_migrate import Migrate,MigrateCommand
 migrate = Migrate(app,db)
 manager.add_command('db',MigrateCommand)
 
+# 使用Flask-Mail提供电子邮件支持
+import os
+app.config['MAIL_SERVER'] = 'smtp.qq.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+# Flask-Mail
+
+mail = Mail(app)
+app.config['FLASKY_ADMIN'] = os.environ.get('FLASKY_ADMIN')
+
+
 
 # methods参数告诉flask在url映射中把这个视图函数注册为GET，POST请求的处理程序
 # 如果没指定，则认为注册为GET请求的处理函数
@@ -101,6 +112,8 @@ def index_page():
             user = User(username=form.name.data)
             db.session.add(user)    #向数据库中添加数据
             session['know'] = False
+            if app.config['FLASKY_ADMIN']:
+                send_email(app.config['FLASKY_ADMIN'],'New User','mail/new_user', user=user)
         else:
             session['know'] = True
         session['name'] = form.name.data
@@ -202,8 +215,25 @@ class User(db.Model):
         return '<User %r>' % self.username
 
 
+# 异步发送电子邮件
+def send_asyc_email(app,msg):
+    with app.app_comtext():
+        mail.send(msg)
 
 
+# 邮件主题前缀
+app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]'
+# 发件人地址
+app.config['FLASKY_MAIL_SENDER'] = 'Flasky Admin <flasky@example.com>'
+
+def send_email(to,subject, template, **kwargs):
+    msg = Message(app.config['FLASKY_MAIL_SUBJECT_PREFIX']+subject,
+                  sender=app.config['FLASKY_MAIL_SENDER'],recipients=[to])
+    msg.body = render_template(template+'.txt',**kwargs)
+    msg.html = render_template(template+'.html',**kwargs)
+    t = Thread(target=send_asyc_email,args=[app,msg])
+    t.start()
+    return t
 
 
 
