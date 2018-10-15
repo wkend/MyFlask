@@ -15,21 +15,9 @@ from flask_script import Shell
 from flask_mail import Mail,Message
 from flask_sqlalchemy import SQLAlchemy
 from threading import Thread
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import  DataRequired
 
-class NameForm(FlaskForm):
-    """
-    使用Flask-WTF时，每个Web表单都由一个继承自Form的类表示。这个类定义表单中的
-    一组字段，每个字段都用对象表示。字段对象可附属一个或对个验证函数，验证函数用来
-    验证用户提交的注入值是否符合要求。
-    """
-    # StringField类表示属性为 type="text" 的 <input> 元素
-    # validators指定一个验证函数的列表，DataRequired确保提交的字段不为空
-    name = StringField('What is your name?',validators=[DataRequired()])
-    # SubmitField类表示属性为 type="submit" 的<input> 元素
-    submit = SubmitField('Submit')
+
+
 
 
 app = flask.Flask(__name__)
@@ -183,26 +171,9 @@ def bad_page():
 
 """通过定义类来定义模型"""
 
-# 定义Role模型
-class Role(db.Model):
-    __tablename__ = 'role'
-    id = db.Column(db.Integer,primary_key=True)
-    name = db.Column(db.String(64),unique=True)
-    # 建立关系，第一个参数代表关系的另一端是哪个模型，backref向User模型中添加一个role属性
-    users = db.relationship('User',backref='role',lazy='dynamic')
 
-    def __repr__(self):
-        return '<Role %r>' % self.name
 
-class User(db.Model):
-    __tablename__ = 'user'
-    id = db.Column(db.Integer,primary_key=True)
-    username = db.Column(db.String(64),unique=True,index=True)
-    # 添加到User模型中的列role.id被定义为外键，就是这个外键建立了联系,lazy参数取消自助执行查询
-    role_id = db.Column(db.Integer,db.ForeignKey('role.id'))
 
-    def __repr__(self):
-        return '<User %r>' % self.username
 
 
 # 异步发送电子邮件
