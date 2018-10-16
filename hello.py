@@ -81,33 +81,8 @@ def index_page():
     return render_template('index.html', current_time=datetime.utcnow(), form=form, name=session.get('name'))
     """
 
-    # 在视图函数中操作数据库
-    form = NameForm()
-    if form.validate_on_submit():
-        # 利用过滤器进行数据库符查询
-        user = User.query.filter_by(username=form.name.data).first()
-        if user is None:
-            user = User(username=form.name.data)
-            db.session.add(user)    #向数据库中添加数据
-            session['know'] = False
-            if app.config['FLASKY_ADMIN']:
-                send_email(app.config['FLASKY_ADMIN'],'New User','mail/new_user', user=user)
-        else:
-            session['know'] = True
-        session['name'] = form.name.data
-        form.name.data = ''
-        return redirect(url_for('index_page'))
-    return render_template('index.html', current_time=datetime.utcnow(), form=form, name=session.get('name'),know=session.get('know',False))
 
-# 为shell命令添加一个上下文，为shell命令注册一个回调函数
-def make_shell_context():
-    """
-    我们可以做些配置，让 Flask-Script的shell命令自动导入特定的对象
-    该函数注册了程序，数据库实例以及模型，因此这些数据能直接导入shell
-    :return:
-    """
-    return dict(app=app,db=db,User=User,Role=Role)
-manager.add_command("shell",Shell(make_context=make_shell_context))
+
 
 
 @app.errorhandler(404)
@@ -176,25 +151,7 @@ def bad_page():
 
 
 
-# 异步发送电子邮件
-def send_asyc_email(app,msg):
-    with app.app_comtext():
-        mail.send(msg)
 
-
-# 邮件主题前缀
-app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]'
-# 发件人地址
-app.config['FLASKY_MAIL_SENDER'] = 'Flasky Admin <flasky@example.com>'
-
-def send_email(to,subject, template, **kwargs):
-    msg = Message(app.config['FLASKY_MAIL_SUBJECT_PREFIX']+subject,
-                  sender=app.config['FLASKY_MAIL_SENDER'],recipients=[to])
-    msg.body = render_template(template+'.txt',**kwargs)
-    msg.html = render_template(template+'.html',**kwargs)
-    t = Thread(target=send_asyc_email,args=[app,msg])
-    t.start()
-    return t
 
 
 

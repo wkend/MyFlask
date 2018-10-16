@@ -1,20 +1,11 @@
-#!/usr/bin/env python 3.5
-# -*- coding: utf-8 -*-
-# @Time    : 2018/10/14 11:06
-# @Author  : wkend
-# @File    : manage.py
-# @Software: PyCharm
-
+"""启动脚本"""
 
 import os
 from app import create_app,db
 from app.models import User,Role
 from flask_script import Manager,Shell
 from flask_migrate import Migrate,MigrateCommand
-
-"""
-启动脚本，用于启动程序
-"""
+from flask_sqlalchemy import SQLAlchemy
 
 # 创建程序
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
