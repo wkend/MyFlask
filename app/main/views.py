@@ -24,13 +24,15 @@ def index():
             # noinspection PyArgumentList
             user = User(username=form.name.data)
             db.session.add(user)  # 向数据库中添加数据
+            db.session.commit()
             session['know'] = False
             if current_app.config['FLASKY_ADMIN']:
-                 send_email(current_app.config['FLASKY_ADMIN'], 'New User', 'mail/new_user', user=user)
+                 send_email(current_app.config['FLASKY_ADMIN'], 'New User',
+                            'mail/new_user', user=user)
         else:
             session['know'] = True
         session['name'] = form.name.data
         form.name.data = ''
-        return redirect(url_for('index_page'))
+        return redirect(url_for('.index'))
     return render_template('index.html', current_time=datetime.utcnow(), form=form, name=session.get('name'),
                            know=session.get('know', False))
