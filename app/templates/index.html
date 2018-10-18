@@ -9,19 +9,21 @@
 
 {% block page_content %}
 <div class="page-header">
-    <h1>Hello, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1>
-
-    {% if not know %}
-    <p>Pleased to meet!</p>
-    {% else %}
-    <p>Happy to see you again!</p>
-    {% endif %}
-
     <!--在模板中渲染 current_time，使用 Flask-Moment 渲染时间戳-->
     <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
     <!--时间推移更新时间-->
     <p>That was {{ moment(current_time).fromNow(refresh=True) }}.</p>
+
+<!--使用已登录用户的名字显示一个欢迎消息-->
+<h1>Hello,
+    {% if current_user.is_authenticated %}
+        {{ current_user.username }}
+    {% else %}
+        Stranger,,,
+    {% endif %}
+</h1>
 </div>
+
 <!--使用 wtf.quick_form() 函数渲染NameForm 对象-->
 {{ wtf.quick_form(form) }}
 {% endblock %}
