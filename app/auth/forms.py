@@ -1,11 +1,11 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField,PasswordField,BooleanField,SubmitField
 from wtforms.validators import DataRequired,Length,Email,Regexp,EqualTo
 from wtforms import ValidationError
 from ..models import User
 
 """用户登录表单"""
-class LoginForm(Form):
+class LoginForm(FlaskForm):
     email = StringField('Email',validators=[DataRequired(),Length(1,64),
                         Email()])
     password = PasswordField('Password',validators=[DataRequired()])
@@ -14,7 +14,7 @@ class LoginForm(Form):
 
 
 """用户注册表单"""
-class RegisterationForm(Form):
+class RegisterationForm(FlaskForm):
     email = StringField('Email',validators=[DataRequired(),Length(1,64),Email()])
     # 使用WTForms的Regexp对用户名的字符进行限制，使其只能用数字、字母、下划线和点号
     username = StringField('Username',validators=[DataRequired(),Length(1,64),
