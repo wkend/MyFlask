@@ -1,12 +1,38 @@
-
-
 from flask_wtf import Form
 from wtforms import StringField,PasswordField,BooleanField,SubmitField
-from wtforms.validators import DataRequired,Length,Email
+from wtforms.validators import DataRequired,Length,Email,Regexp,EqualTo
+from wtforms import ValidationError
+from ..models import User
 
+"""用户登录表单"""
 class LoginForm(Form):
     email = StringField('Email',validators=[DataRequired(),Length(1,64),
                         Email()])
     password = PasswordField('Password',validators=[DataRequired()])
     remember_me = BooleanField('Keep me logged in')
     submit = SubmitField('Log In')
+
+
+"""用户注册表单"""
+class RegisterationForm(Form):
+    email = StringField('Email',validators=[DataRequired(),Length(1,64),Email()])
+    # 使用WTForms的Regexp对用户名的字符进行限制，使其只能用数字、字母、下划线和点号
+    username = StringField('Username',validators=[DataRequired(),Length(1,64),
+                            Regexp('^[A-Za-z0-9_.]*$',0,'Usernames must have only letters, numbers,dots or underscores')])
+    # 为了安全起见，密码需要输入两次，使用WTForms的EqualTo进行验证
+    password = PasswordField('password',validators=[DataRequired(),EqualTo('password2',message='Password must match.')])
+    password2 = PasswordField('Confirm password',validators=[DataRequired()])
+    submit = SubmitField('Register')
+
+    def validate_email(self,field):
+        """自定义验证函数"""
+        if User.query.filter_by(email=field.data).first():
+            # 利用异常将验证失败提示信息显示出来
+            raise ValidationError('Email already registered')
+
+
+    def validate_username(self,field):
+        """自定义验证函数"""
+        if User.query.filter_by(username=field.data).first():
+            # 利用异常将验证失败提示信息显示出来
+            raise ValidationError('Username already in use.')

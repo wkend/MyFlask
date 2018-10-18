@@ -4,11 +4,14 @@ from flask_login import login_user
 from . import auth
 from ..models import User
 from .forms import LoginForm
+from .forms import RegisterationForm
+from app import db
 
-# 登出用户
+
 from flask_login import logout_user,login_required
 @auth.route('/login',methods=['GET','POST'])
 def login():
+    """用户登录"""
     form = LoginForm()
     if form.validate_on_submit():
         # 用表单中填写的email从数据库中加载用户
@@ -25,6 +28,7 @@ def login():
 
 @auth.route('/logout')
 def logout():
+    """用户登出"""
     # 调用flask_login中的logout_user函数，删除并重设会话
     logout_user()
     # 回复一个flash消息
@@ -34,10 +38,21 @@ def logout():
 
 
 
-# @app.route('/security')
-# @login_required
-# def secret():
-#     return 'Only authenticated users are allowed!'
+"""用户注册路由"""
+@auth.route('/register',methods=['GET','POST'])
+def register():
+    """用户注册"""
+    form = RegisterationForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data,
+                    username=form.username.data,
+                    password_hash=form.password.data)
+        db.session.add(user)
+        db.commit()
+        flash('You can login.')
+        return render_template(url_for('auth.login'))
+    return render_template('auth/register.html',form=form)
+
 
 
 
