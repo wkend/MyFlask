@@ -14,6 +14,16 @@ from . import login_manager
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 
+# 定义权限常亮
+class Permission:
+    FOLLOW = 0x01
+    COMMENT = 0x02
+    WRITE_ARTICLES = 0x04
+    MODERATE_COMMENTS = 0x08
+    ADMINISTER = 0x80
+
+
+
 class Role(db.Model):
     """
     SQLAlchemy 会使用一个默认名字，但默认的表名没有遵守使用复数形式进行命名的约定，
@@ -23,11 +33,35 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)    # 指定主键
     name = db.Column(db.String(64), unique=True)    # 不允许出现重复的值
     password_hash = db.Column(db.String(128))   # 变长字符串
+    default = db.Column(db.Boolean,default=False)
+    permissions = db.Column(db.Integer)
     # 建立关系，第一个参数代表关系的另一端是哪个模型，backref向User模型中添加一个role属性,lazy参数取消自助执行查询
     users = db.relationship('User', backref='role', lazy='dynamic')
 
     def __repr__(self):
         return '<Role %r>' % self.name
+
+
+    @staticmethod
+    def insert_roles():
+        """
+        通过角色名查找现有角色，然后再进行更新，只有当数据库中没有某个角色时才会创建角色
+        :return:
+        """
+        roles = {
+            'User':(Permission.FOLLOW|Permission.COMMENT|Permission.WRITE_ARTICLES,True),
+            'Moderate':(Permission.FOLLOW|Permission.COMMENT|Permission.WRITE_ARTICLES|Permission.MODERATE_COMMENTS,False),
+            'Administrator':(0xff,False)
+        }
+        for r in roles:
+            role = Role.query.filter_by(name=r).first()
+            if role is None:
+                role = Role(name=r)
+            role.permissions= roles[r][0]
+            role.default = roles[r][1]
+            db.session.add(role)
+        db.session.commit()
+
 
 
 class User(UserMixin, db.Model):

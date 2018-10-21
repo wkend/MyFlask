@@ -79,7 +79,7 @@ def confirm(token):
 def resend_confirmation():
     """重新发送账户确认邮件"""
     token = current_user.generate_confirmation_token()
-    send_email(current_user.eamil,'Confirm You Account',
+    send_email(current_user.email,'Confirm You Account',
                'auth/email/confirm',user=current_user,token=token)
     flash('A new confirmation email has been sent to you by email.')
     redirect(url_for('main.index'))
