@@ -3,11 +3,13 @@
 from datetime import datetime
 
 from flask import render_template, session, redirect, url_for, current_app, flash, abort
+from flask_login import login_required, current_user
+
 from .. import db
 from ..models import User
 from ..email import send_email
 from . import main
-from .forms import NameForm
+from .forms import NameForm,EditProfileForm
 
 """在视图函数中操作数据库"""
 @main.route('/', methods=['GET', 'POST'])
@@ -39,10 +41,28 @@ def index():
 
 @main.route('/user/<username>')
 def user(username):
-    """资料页面的路由"""
+    """用户资料页面的路由"""
     #  在数据库中查找该用户
     user = User.query.filter_by(username=username).first()
     if user is None:
         abort(404)
     return render_template('user.html',user=user)
 
+
+@main.route('/edit-profile',methods=['GET','POST'])
+@login_required
+def edit_profile():
+    """资料编辑路由"""
+    form = EditProfileForm()
+    if form.validate_on_submit():   # 如果表单被提交，则更新表单中的各个字段
+        current_user.name = form.name.data
+        current_user.location = form.location.data
+        current_user.about_me = form.about_me.data
+        db.session.add(current_user)
+        flash('Your profile has been updated.')
+        return redirect(url_for('.user',username=current_user))
+    # 未提交表单之前，各个字段都使用current_user中保存的值
+    form.name.data = current_user.name
+    form.location.data = current_user.location
+    form.about_me.data = current_user.about_me
+    return render_template('edit_profile.html',form=form)

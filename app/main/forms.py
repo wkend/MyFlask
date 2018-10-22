@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import  DataRequired
+from wtforms import StringField, SubmitField, TextAreaField
+from wtforms.validators import DataRequired, Length
 
 """定义表单类"""
 class NameForm(FlaskForm):
@@ -14,4 +14,15 @@ class NameForm(FlaskForm):
     name = StringField('What is your name?',validators=[DataRequired()])
     # SubmitField类表示属性为 type="submit" 的<input> 元素
     submit = SubmitField('Submit')
+
+
+"""用户编辑器表单"""
+class EditProfileForm(FlaskForm):
+    """
+    这个人表单中的所有字段都是可选的，所以长度验证函数允许为零
+    """
+    name = StringField('Real name',validators=[Length(0,64)])
+    location = StringField('Location',validators=[Length(0,64)])
+    about_me = TextAreaField('About me')
+    submit = SubmitField('submit')
 
