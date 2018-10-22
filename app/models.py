@@ -13,6 +13,8 @@ from flask_login import UserMixin
 from . import login_manager
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
+from flask_login import UserMixin,AnonymousUserMixin
+
 
 # 定义权限常亮
 class Permission:
@@ -76,6 +78,24 @@ class User(UserMixin, db.Model):
 
     # 确认用户账户
     confirmed = db.Column(db.Boolean,default=False)
+
+    def __init__(self,**kwargs):
+        """定义默认的用户角色"""
+        super(User, self).__init__(**kwargs)
+        if self.role is None:
+            if self.email == current_app.config['FLASK_ADMIN']:
+                self.role = Role.query.filter_by(permissions=0xff).first()
+            if self.role is None:
+                self.role = Role.query.filter_by(default=True).first()
+
+
+    def can(self,permissions):
+        return self.role is not None and (self.role.permissions & permissions) == permissions
+
+
+    def is_administrator(self):
+        return self.can(Permission.ADMINISTER)
+
 
     def generate_confirmation_token(self,expiration=3600):
         """
@@ -142,3 +162,12 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+class AnonymousUser(AnonymousUserMixin):
+    def can(self,permissions):
+        return False
+
+
+    def is_administrator(self):
+        return False
+
+login_manager.anonymous_user = AnonymousUser
