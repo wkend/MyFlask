@@ -87,8 +87,10 @@ def resend_confirmation():
 
 @auth.before_app_request    # 使用该修饰器以在蓝本中使用针对全局请求的钩子
 def before_request():
-    if current_user.is_authenticated and not current_user.confirmed and request.endpoint[:5] != 'auth.'and request.endpoint != 'static':
-        return redirect(url_for('auth.unconfirmed'))
+    if current_user.is_authenticated:
+        current_user.ping() # 更新已登录用户的访问时间
+        if not current_user.confirmed and request.endpoint[:5] != 'auth.'and request.endpoint != 'static':
+            return redirect(url_for('auth.unconfirmed'))
 
 
 @auth.route('/unconfirmed')

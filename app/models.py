@@ -7,6 +7,8 @@
 
 
 # 定义Role模型
+from datetime import datetime
+
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -72,6 +74,10 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     email = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
+    location = db.Column(db.String(64))
+    about_me = db.Column(db.Text())
+    member_since = db.Column(db.DateTime(),default=datetime.utcnow)
+    last_seen = db.Column(db.DateTime(),default=datetime.utcnow)
     # 添加到User模型中的列role.id被定义为外键，就是这个外键建立了联系,参数 'roles.id' 表
     # 明，这列的值是 roles 表中行的 id 值。
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
@@ -146,6 +152,13 @@ class User(UserMixin, db.Model):
         :return: boolean
         """
         return check_password_hash(self.password_hash, password)
+
+
+    def ping(self):
+        """刷新用户的最后访问时间"""
+        self.last_seen = datetime.utcnow()
+        db.session.add(self)
+
 
     def __repr__(self):
         return '<User %r>' % self.username

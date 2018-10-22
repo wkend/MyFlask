@@ -7,10 +7,8 @@
 
 # 异步发送电子邮件
 from threading import Thread
-
 from flask import render_template
 from flask_mail import Message
-
 import app
 from app import mail
 
@@ -23,7 +21,7 @@ def send_asyc_email(app, msg):
 # 邮件主题前缀
 app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]'
 # 发件人地址
-app.config['FLASKY_MAIL_SENDER'] = 'Flasky Admin <flasky@example.com>'
+app.config['FLASKY_MAIL_SENDER'] = 'Flasky Admin <wkend@qq.com>'
 
 
 def send_email(to, subject, template, **kwargs):

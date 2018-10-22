@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from flask import render_template, session, redirect, url_for, current_app, flash
+from flask import render_template, session, redirect, url_for, current_app, flash, abort
 from .. import db
 from ..models import User
 from ..email import send_email
@@ -36,3 +36,13 @@ def index():
         return redirect(url_for('.index'))
     return render_template('index.html', current_time=datetime.utcnow(), form=form, name=session.get('name'),
                            know=session.get('know', False))
+
+@main.route('/user/<username>')
+def user(username):
+    """资料页面的路由"""
+    #  在数据库中查找该用户
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        abort(404)
+    return render_template('user.html',user=user)
+
