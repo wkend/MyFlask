@@ -10,8 +10,8 @@ class Config:
     FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
     FLASKY_MAIL_SENDER = 'Flasky Admin <wkend@qq.com>'
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')   # 收件人
-    FLASK_ADMIN_SENDER = os.environ.get('FLASK_ADMIN_SENDER')   # 用于发送确认邮件的发送人
-    FLASK_ADMIN_AUTHORIZATION_CODE = os.environ.get('MAIL_AUTHORIZATION_CODE')  # qq邮箱用于发送邮件的授权码
+    FLASKY_ADMIN_SENDER = os.environ.get('FLASKY_ADMIN_SENDER')   # 用于发送确认邮件的发送人
+    FLASKY_ADMIN_AUTHORIZATION_CODE = os.environ.get('MAIL_AUTHORIZATION_CODE')  # qq邮箱用于发送邮件的授权码
 
     @staticmethod
     def init_app(app):

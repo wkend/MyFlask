@@ -15,7 +15,7 @@ def send_asyc_email(app, msg):
 # 邮件主题前缀
 app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]'
 # 发件人地址
-app.config['FLASKY_MAIL_SENDER'] = 'Flasky Admin <wkend@qq.com>'
+# app.config['FLASKY_MAIL_SENDER'] = 'Flasky Admin <wkend@qq.com>'
 # 开启邮件发送异常模块的使用
 app.config['MAIL_USE_SSL'] = True
 
@@ -32,10 +32,10 @@ app.config['MAIL_USE_SSL'] = True
 def send_email(recipients, subject, template, **kwargs):
     """
     发送邮件
-    :param recipients:
-    :param subject:
-    :param template:
-    :param kwargs:
+    :param recipients: 收件人邮箱地址
+    :param subject: 邮件主题
+    :param template: 模板
+    :param kwargs: 附加参数
     :return:
     """
     content = '这是确认邮箱，欢迎来到flask blog!'
@@ -47,8 +47,8 @@ def send_email(recipients, subject, template, **kwargs):
 
     s = smtplib.SMTP_SSL("smtp.qq.com",465) # 配置邮件发送服务器
     try:
-        s.login(app.config['FLASK_ADMIN_SENDER'],app.config['FLASK_ADMIN_AUTHORIZATION_CODE'])
-        s.sendmail(app.config['FLASK_ADMIN_SENDER'],recipients,msg.as_string())
+        s.login(app.config['FLASKY_ADMIN_SENDER'],app.config['FLASKY_ADMIN_AUTHORIZATION_CODE'])
+        s.sendmail(app.config['FLASKY_ADMIN_SENDER'],recipients,msg.as_string())
         print('发送成功！')
         t = Thread(target=send_asyc_email, args=[app, msg])
         t.start()
