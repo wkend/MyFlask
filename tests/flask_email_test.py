@@ -1,5 +1,5 @@
 
-from flask import Flask, request
+from flask import Flask, request, current_app
 from flask_script import Manager, Shell
 from flask_mail import Mail, Message
 from threading import Thread
@@ -13,6 +13,7 @@ app.config['MAIL_PORT'] = 465               # 端口
 app.config['MAIL_USE_SSL'] = True           # 重要，qq邮箱需要使用SSL
 app.config['MAIL_USE_TLS'] = False          # 不需要使用TLS
 app.config['MAIL_USERNAME'] = 'wkend@qq.com'  # 填邮箱
+
 app.config['MAIL_PASSWORD'] = 'sjfetjyvttscfjfd'      # 填授权码
 app.config['MAIL_DEFAULT_SENDER'] = 'wkend@qq.com'  # 填邮箱，默认发送者
 manager = Manager(app)
@@ -29,7 +30,8 @@ def send_async_email(app, msg):
 def index():
     try:
         msg = Message(subject='hell,This is flask email test,,,',
-                      sender="wkend@qq.com",  # 需要使用默认发送者则不用填
+                      #sender="wkend@qq.com",  # 需要使用默认发送者则不用填
+                      sender=app.config['MAIL_USERNAME'],
                       recipients=['wkend@qq.com'])
         # 邮件内容会以文本和html两种格式呈现，而你能看到哪种格式取决于你的邮件客户端。
         msg.body = 'sent by flask-email'
@@ -42,4 +44,5 @@ def index():
 
 
 if __name__ == '__main__':
+    print(app.config['FLASKY_ADMIN_SENDER'])
     manager.run()
