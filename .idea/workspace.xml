@@ -2,15 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8d9996e9-ed06-4e2a-9701-892ae3659f68" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/auth/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/auth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/email.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/email.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data-dev.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/data-dev.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/alembic.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/env.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/script.py.mako" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/versions/0f0985c75af3_add_new_colnum_to_database.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/versions/24199fe5fb33_add_user_information.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/versions/a221cb461542_登录登出表单.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/versions/fe91b25960e8_migrate_dabase.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -106,17 +106,17 @@
         <counts>
           <entry key="Python Console" value="851" />
           <entry key="html" value="3545" />
-          <entry key="md" value="214" />
+          <entry key="md" value="385" />
           <entry key="py" value="16204" />
           <entry key="sql" value="63" />
-          <entry key="txt" value="805" />
+          <entry key="txt" value="860" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="3545" />
-          <entry key="Markdown" value="214" />
-          <entry key="PLAIN_TEXT" value="805" />
+          <entry key="Markdown" value="385" />
+          <entry key="PLAIN_TEXT" value="860" />
           <entry key="Python" value="17055" />
           <entry key="Scratch" value="63" />
         </counts>
@@ -125,7 +125,7 @@
         <counts>
           <entry key="html" value="37" />
           <entry key="ico" value="4" />
-          <entry key="md" value="4" />
+          <entry key="md" value="5" />
           <entry key="py" value="99" />
           <entry key="roles" value="1" />
           <entry key="sql" value="17" />
@@ -138,7 +138,7 @@
           <entry key="Database Element" value="5" />
           <entry key="HTML" value="37" />
           <entry key="Image" value="4" />
-          <entry key="Markdown" value="4" />
+          <entry key="Markdown" value="5" />
           <entry key="PLAIN_TEXT" value="3" />
           <entry key="Python" value="99" />
           <entry key="SQL" value="5" />
@@ -213,23 +213,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/auth/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/auth/数据库迁移.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="198">
-                <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
-              </first_editor>
-              <second_editor />
+            <state relative-caret-position="109">
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
             </state>
           </provider>
         </entry>
@@ -324,7 +312,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="102" />
+    <option name="x" value="469" />
+    <option name="y" value="4" />
     <option name="width" value="1217" />
     <option name="height" value="736" />
   </component>
@@ -826,7 +815,21 @@
       <option name="project" value="LOCAL" />
       <updated>1540880372756</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="refactor database code and cancel email authorization">
+      <created>1541059271830</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1541059271830</updated>
+    </task>
+    <task id="LOCAL-00043" summary="refactor database code and cancel email authorization">
+      <created>1541059893617</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1541059893617</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
@@ -839,13 +842,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="609" y="4" width="1217" height="736" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4973357" weight="0.23422645" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4973357" visible="true" weight="0.18229954" />
       <window_info id="Structure" order="1" sideWeight="0.5008881" side_tool="true" weight="0.21406959" />
       <window_info id="Favorites" order="2" sideWeight="0.5008881" side_tool="true" weight="0.21406959" />
-      <window_info id="Database" order="3" sideWeight="0.50177306" weight="0.24978392" />
+      <window_info id="Database" order="3" sideWeight="0.50177306" weight="0.21860817" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32495812" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4969743" weight="0.3484087" />
@@ -855,9 +857,9 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3283082" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.7639939" weight="0.4339934" />
-      <window_info anchor="bottom" id="Database Changes" order="9" weight="0.3283082" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.505295" side_tool="true" weight="0.24257426" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.494705" visible="true" weight="0.31438127" />
+      <window_info anchor="bottom" id="Database Changes" order="9" weight="0.32673267" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.505295" side_tool="true" weight="0.38943896" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.494705" visible="true" weight="0.6171617" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.4240924" />
       <window_info anchor="bottom" id="Database Console" order="13" weight="0.45874587" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -925,7 +927,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="SHOW_DIRTY_RECURSIVELY" value="true" />
-    <MESSAGE value="use flask-wtf add web form" />
     <MESSAGE value="add flash messages" />
     <MESSAGE value="use Flask-SQLAlchemy manage database--defined model" />
     <MESSAGE value="add relationship" />
@@ -950,7 +951,8 @@
     <MESSAGE value="repaired some email bugs,,,," />
     <MESSAGE value="测试通过qq邮箱来发送邮件" />
     <MESSAGE value="update some units" />
-    <option name="LAST_COMMIT_MESSAGE" value="update some units" />
+    <MESSAGE value="refactor database code and cancel email authorization" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor database code and cancel email authorization" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/templates/auth/login.html" />
@@ -1264,20 +1266,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/auth/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/auth/数据库迁移.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="198">
-            <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+          <first_editor relative-caret-position="242">
+            <caret line="38" column="3" lean-forward="true" selection-start-line="38" selection-start-column="3" selection-end-line="38" selection-end-column="3" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/auth/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
