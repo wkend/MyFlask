@@ -15,13 +15,21 @@ class LoginForm(FlaskForm):
 
 """用户注册表单"""
 class RegisterationForm(FlaskForm):
-    email = StringField('Email',validators=[DataRequired(),Length(1,64),Email()])
+    email = StringField('Email',
+                        validators=[DataRequired(),Length(1,64),Email()])
     # 使用WTForms的Regexp对用户名的字符进行限制，使其只能用数字、字母、下划线和点号
-    username = StringField('Username',validators=[DataRequired(),Length(1,64),
-                            Regexp('^[A-Za-z0-9_.]*$',0,'Usernames must have only letters, numbers,dots or underscores')])
+    username = StringField('Username',
+                           validators=[DataRequired(),Length(1,64),
+                            Regexp('^[A-Za-z0-9_.]*$',0,
+                        'Usernames must have only letters, '
+                        'numbers,dots or underscores')])
     # 为了安全起见，密码需要输入两次，使用WTForms的EqualTo进行验证
-    password = PasswordField('password',validators=[DataRequired(),EqualTo('password2',message='Password must match.')])
-    password2 = PasswordField('Confirm password',validators=[DataRequired()])
+    password = PasswordField('Password',
+                             validators=[DataRequired(),
+                            EqualTo('password2',
+                            message='Passwords must match.')])
+    password2 = PasswordField('Confirm password',
+                              validators=[DataRequired()])
     submit = SubmitField('Register')
 
     def validate_email(self,field):

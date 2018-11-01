@@ -81,15 +81,14 @@ class User(UserMixin, db.Model):
     # 添加到User模型中的列role.id被定义为外键，就是这个外键建立了联系,参数 'roles.id' 表
     # 明，这列的值是 roles 表中行的 id 值。
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-
     # 确认用户账户
-    confirmed = db.Column(db.Boolean,default=False)
+    # confirmed = db.Column(db.Boolean,default=False)
 
     def __init__(self,**kwargs):
         """定义默认的用户角色"""
         super(User, self).__init__(**kwargs)
         if self.role is None:
-            if self.email == current_app.config['FLASK_ADMIN']:
+            if self.email == current_app.config['FLASKY_ADMIN']:
                 self.role = Role.query.filter_by(permissions=0xff).first()
             if self.role is None:
                 self.role = Role.query.filter_by(default=True).first()
@@ -103,34 +102,34 @@ class User(UserMixin, db.Model):
         return self.can(Permission.ADMINISTER)
 
 
-    def generate_confirmation_token(self,expiration=3600):
-        """
-        生成一个令牌，有效期为一个小时
-        :param expiration:秘钥
-        :return:令牌字符串
-        """
-        s = Serializer(current_app.config['SECRET_KEY'],expiration)
-        # dumps为指定的数据生成一个加密签名，然后再对数据和密码进行格式化
-        return s.dumps({'confirm':self.id})
-
-
-    def confirm(self,token):
-        """
-        验证令牌,还检查令牌中的用户是否和存储在current_user中的已经登录的用户匹配
-        :param token: 待验证的token
-        :return: 验证结果
-        """
-        s = Serializer(current_app.config['SECRET_KEY'])
-        try:
-            # loads检验签名和过期时间，如果通过，会返回原始数据，否则抛出异常
-            data = s.loads(token)
-        except:
-            return False
-        if data.get('confirm') != self.id:
-            return False
-        self.confirmed = True
-        db.session.add(self)
-        return True
+    # def generate_confirmation_token(self,expiration=3600):
+    #     """
+    #     生成一个令牌，有效期为一个小时
+    #     :param expiration:秘钥
+    #     :return:令牌字符串
+    #     """
+    #     s = Serializer(current_app.config['SECRET_KEY'],expiration)
+    #     # dumps为指定的数据生成一个加密签名，然后再对数据和密码进行格式化
+    #     return s.dumps({'confirm':self.id})
+    #
+    #
+    # def confirm(self,token):
+    #     """
+    #     验证令牌,还检查令牌中的用户是否和存储在current_user中的已经登录的用户匹配
+    #     :param token: 待验证的token
+    #     :return: 验证结果
+    #     """
+    #     s = Serializer(current_app.config['SECRET_KEY'])
+    #     try:
+    #         # loads检验签名和过期时间，如果通过，会返回原始数据，否则抛出异常
+    #         data = s.loads(token)
+    #     except:
+    #         return False
+    #     if data.get('confirm') != self.id:
+    #         return False
+    #     self.confirmed = True
+    #     db.session.add(self)
+    #     return True
 
     @property
     def password(self):
