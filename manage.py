@@ -11,7 +11,7 @@ from flask_mail import Mail
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
 migrate = Migrate(app,db)
-mail = Mail(app)
+# mail = Mail(app)
 
 def make_shell_context():
     return dict(app=app,db=db,User=User,Role=Role)

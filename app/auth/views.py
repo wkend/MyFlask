@@ -6,6 +6,7 @@ from .forms import LoginForm
 from .forms import RegisterationForm
 from app import db
 from ..email import send_email
+import app
 from flask_login import current_user
 
 
@@ -53,10 +54,10 @@ def register():
         db.session.commit()
         flash('register successfully!')
         # 在重定向之前，需要发送确认邮件
-        # token = user.generate_confirmation_token()
-        # send_email(user.email,'Confirm Your Account','auth/email/confirm',user=user,token=token)
-        # flash('A confirmation email has been send to you by email,,,')
-        # return redirect(url_for('main.index'))
+        token = user.generate_confirmation_token()
+        # send_email参数：标题，收件人，模板
+        send_email('Confirm Your Account',user.email,'auth/email/confirm')
+        flash('A confirmation email has been send to you by email,,,')
         # 注册完成，跳转到登录页面
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html',form=form)
