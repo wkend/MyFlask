@@ -5,8 +5,6 @@ from ..models import User
 from .forms import LoginForm
 from .forms import RegisterationForm
 from app import db
-from ..email import send_email
-import app
 from flask_login import current_user
 
 
@@ -53,52 +51,44 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('register successfully!')
-        # 在重定向之前，需要发送确认邮件
-        token = user.generate_confirmation_token()
-        # send_email参数：标题，收件人，模板
-        send_email('Confirm Your Account',user.email,'auth/email/confirm')
-        flash('A confirmation email has been send to you by email,,,')
         # 注册完成，跳转到登录页面
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html',form=form)
 
 
 
-# @auth.route('/confirm/<token>')
-# @login_required
-# def confirm(token):
-#     """确认用户的账户"""
-#     if current_user.confirmed:  # 判断已经登录的用户是否已经确认过
-#         return redirect(url_for('main.index'))
-#     if current_user.confirm(token):
-#         flash('You have confirmed your account. Thanks!')
-#     else:
-#         flash('The confirmation link is invalid or has expired!')
-#     return redirect(url_for('main.index'))
-#
-#
-# @auth.route('/confirm')
-# @login_required
-# def resend_confirmation():
-#     """重新发送账户确认邮件"""
-#     token = current_user.generate_confirmation_token()
-#     send_email(current_user.email,'Confirm You Account',
-#                'auth/email/confirm',user=current_user,token=token)
-#     flash('A new confirmation email has been sent to you by email.')
-#     redirect(url_for('main.index'))
-#
-#
-# @auth.before_app_request    # 使用该修饰器以在蓝本中使用针对全局请求的钩子
-# def before_request():
-#     if current_user.is_authenticated:
-#         current_user.ping() # 更新已登录用户的访问时间
-#         if not current_user.confirmed and request.endpoint[:5] != 'auth.'and request.endpoint != 'static':
-#             return redirect(url_for('auth.unconfirmed'))
-#
-#
-# @auth.route('/unconfirmed')
-# def unconfirmed():
-#     if current_user.is_anonymous or current_user.confirmed:
-#         return redirect(url_for('main.index'))
-#     return render_template('auth/unconfirmed.html')
+@auth.route('/confirm/<token>')
+@login_required
+def confirm(token):
+    """确认用户的账户"""
+    if current_user.confirmed:  # 判断已经登录的用户是否已经确认过
+        return redirect(url_for('main.index'))
+    if current_user.confirm(token):
+        flash('You have confirmed your account. Thanks!')
+    else:
+        flash('The confirmation link is invalid or has expired!')
+    return redirect(url_for('main.index'))
+
+@auth.before_app_request
+def before_request():
+    if current_user.is_authenticated():
+        current_user.ping()
+        if not current_user.confirmed and request.endpoint[:5] != 'auth.':
+            return redirect(url_for('auth.unconfirmed'))
+
+
+
+@auth.before_app_request    # 使用该修饰器以在蓝本中使用针对全局请求的钩子
+def before_request():
+    if current_user.is_authenticated:
+        current_user.ping() # 更新已登录用户的访问时间
+        if not current_user.confirmed and request.endpoint[:5] != 'auth.'and request.endpoint != 'static':
+            return redirect(url_for('auth.unconfirmed'))
+
+
+@auth.route('/unconfirmed')
+def unconfirmed():
+    if current_user.is_anonymous or current_user.confirmed:
+        return redirect(url_for('main.index'))
+    return render_template('auth/unconfirmed.html')
 

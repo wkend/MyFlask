@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/flasky" vcs="CVS" />
+    <mapping directory="$PROJECT_DIR$/../扩展欧几里得实现" vcs="Git" />
   </component>
 </project>
