@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,BooleanField,SubmitField
+from wtforms import StringField,PasswordField,BooleanField,SubmitField,TextAreaField,SelectField
 from wtforms.validators import DataRequired,Length,Email,Regexp,EqualTo
 from wtforms import ValidationError
-from ..models import User
+from ..models import Role, User
 
 """用户登录表单"""
 class LoginForm(FlaskForm):
@@ -44,3 +44,4 @@ class RegisterationForm(FlaskForm):
         if User.query.filter_by(username=field.data).first():
             # 利用异常将验证失败提示信息显示出来
             raise ValidationError('Username already in use.')
+
