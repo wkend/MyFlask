@@ -7,6 +7,7 @@
 
 
 # 定义Role模型
+import hashlib
 from datetime import datetime
 
 from . import db
@@ -14,7 +15,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from . import login_manager
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from flask import current_app
+from flask import current_app,request
 from flask_login import UserMixin,AnonymousUserMixin
 
 
@@ -93,6 +94,8 @@ class User(UserMixin, db.Model):
                 self.role = Role.query.filter_by(permissions=0xff).first()
             if self.role is None:
                 self.role = Role.query.filter_by(default=True).first()
+        if self.email is not None and self.avatar_hash is None:
+            self.avatar_hash = self.gravatar_hash()
 
 
     def can(self,permissions):
@@ -101,6 +104,24 @@ class User(UserMixin, db.Model):
 
     def is_administrator(self):
         return self.can(Permission.ADMINISTER)
+
+
+    def gravatar(self,size=100,default='identicon',rating='g'):
+        """用户头像"""
+        if request.is_secure:
+            url = 'https://secure.gravatar.com/avatar'
+        else:
+            url = 'http://www.gravatar.com/avatar'
+        hash = hashlib.md5(self.email.encode('utf-8')).hexdigest()
+        return '{url}/{hash}?s={size}&d={default}&r={rating}'.format(
+            url=url, hash=hash, size=size, default=default, rating=rating
+        )
+
+
+
+
+
+
 
 
     # def generate_confirmation_token(self,expiration=3600):
@@ -184,3 +205,12 @@ class AnonymousUser(AnonymousUserMixin):
         return False
 
 login_manager.anonymous_user = AnonymousUser
+
+
+class Post(db.Model):
+    """定义文章模型"""
+    __tablename__ = 'posts' # 表名
+    id = db.Column(db.Integer,primary_key=True) # id号
+    body = db.Column(db.Text)   # 正文
+    timestamp = db.Column(db.DateTime,index=True,default=datetime.utcnow) # 时间戳
+    author_id = db.Column(db.Integer,db.ForeignKey('users.id'))

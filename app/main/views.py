@@ -6,39 +6,26 @@ from flask import render_template, session, redirect, url_for, current_app, flas
 from flask_login import login_required, current_user
 
 from .. import db
-from ..models import User,Role
+from ..models import User, Role, Permission, Post
 from . import main
-from .forms import EditProfileForm, NameForm, EditProfileAdminForm
+from .forms import EditProfileForm, PostForm, EditProfileAdminForm
 from ..decorators import admin_required
 
 
 """在视图函数中操作数据库"""
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    form = NameForm()  # type: NameForm
-    if form.validate_on_submit():   # 判断提交的实际是否能被所有验证函数所接受
-        # old_name = session.get('name')  # 会话中存储的name为前一次在表单中提交的数据
-        # if old_name is not None and old_name != form.name.data: # 将提交的数据与会话中的数据比较
-        #     flash('Looks like you have changed your name!')
-        # 利用过滤器进行数据库符查询
-        user = User.query.filter_by(username=form.name.data).first()
-        # session['name'] = form.name.data
-        if user is None:
-            # noinspection PyArgumentList
-            user = User(username=form.name.data)
-            db.session.add(user)  # 向数据库中添加数据
-            db.session.commit()
-            session['know'] = False
-            # if current_app.config['FLASKY_ADMIN']:
-            #      send_email(current_app.config['FLASKY_ADMIN'], 'New User',
-            #                 'mail/new_user', user=user)
-        else:
-            session['know'] = True
-        session['name'] = form.name.data
-        form.name.data = ''
+    """处理博客文章的首页路由"""
+    form = PostForm()
+    if current_user.can(Permission.WRITE_ARTICLES) and form.validate_on_submit():
+        post = Post(body=form.body.data,author=current_user._get_current_object())
+        db.session.add(post)
+        db.session.commit()
         return redirect(url_for('.index'))
-    return render_template('index.html', current_time=datetime.utcnow(), form=form, name=session.get('name'),
-                           know=session.get('know', False))
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    return render_template('index.html',form=form,posts=posts)
+
+
 
 @main.route('/user/<username>')
 def user(username):

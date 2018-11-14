@@ -3,7 +3,7 @@ from flask_login import login_user,logout_user,login_required
 from . import auth
 from ..models import User
 from .forms import LoginForm
-from .forms import RegisterationForm
+from .forms import RegisterationForm,ChangePasswordForm
 from app import db
 from flask_login import current_user
 
@@ -55,19 +55,33 @@ def register():
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html',form=form)
 
-
-
-@auth.route('/confirm/<token>')
+@auth.route('/change-password',methods=['GET','POST'])
 @login_required
-def confirm(token):
-    """确认用户的账户"""
-    if current_user.confirmed:  # 判断已经登录的用户是否已经确认过
-        return redirect(url_for('main.index'))
-    if current_user.confirm(token):
-        flash('You have confirmed your account. Thanks!')
-    else:
-        flash('The confirmation link is invalid or has expired!')
-    return redirect(url_for('main.index'))
+def change_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        if current_user.verfy_password(form.old_password.data):
+            current_user.password = form.password.data
+            db.session.add(current_user)
+            db.session.commit()
+            flash('Your password has been updated.')
+            return redirect(url_for('main.index'))
+        else:
+            flash('Invalid password.')
+    return render_template('auth/change_password.html',form=form)
+
+
+# @auth.route('/confirm/<token>')
+# @login_required
+# def confirm(token):
+#     """确认用户的账户"""
+#     if current_user.confirmed:  # 判断已经登录的用户是否已经确认过
+#         return redirect(url_for('main.index'))
+#     if current_user.confirm(token):
+#         flash('You have confirmed your account. Thanks!')
+#     else:
+#         flash('The confirmation link is invalid or has expired!')
+#     return redirect(url_for('main.index'))
 
 # @auth.before_app_request
 # def before_request():
@@ -86,9 +100,9 @@ def confirm(token):
 #             return redirect(url_for('auth.unconfirmed'))
 
 
-@auth.route('/unconfirmed')
-def unconfirmed():
-    if current_user.is_anonymous or current_user.confirmed:
-        return redirect(url_for('main.index'))
-    return render_template('auth/unconfirmed.html')
+# @auth.route('/unconfirmed')
+# def unconfirmed():
+#     if current_user.is_anonymous or current_user.confirmed:
+#         return redirect(url_for('main.index'))
+#     return render_template('auth/unconfirmed.html')
 
