@@ -159,9 +159,9 @@
       <Position>9</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="44" parent="10" name="confirmed">
+    <column id="44" parent="10" name="avatar_hash">
       <Position>10</Position>
-      <DataType>BOOLEAN|0s</DataType>
+      <DataType>VARCHAR(32)|0s</DataType>
     </column>
     <index id="45" parent="10" name="ix_users_username">
       <ColNames>username</ColNames>

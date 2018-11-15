@@ -44,6 +44,9 @@ class Role(db.Model):
     # 建立关系，第一个参数代表关系的另一端是哪个模型，backref向User模型中添加一个role属性,lazy参数取消自助执行查询
     users = db.relationship('User', backref='role', lazy='dynamic')
 
+    def has_permission(self, perm):
+        return self.permissions and perm == perm
+
     def __repr__(self):
         return '<Role %r>' % self.name
 
@@ -83,6 +86,8 @@ class User(UserMixin, db.Model):
     # 添加到User模型中的列role.id被定义为外键，就是这个外键建立了联系,参数 'roles.id' 表
     # 明，这列的值是 roles 表中行的 id 值。
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    avatar_hash = db.Column(db.String(32))
+    posts = db.relationship('Post',backref='auth',lazy='dynamic')
     # # 确认用户账户
     # confirmed = db.Column(db.Boolean,default=False)
 
@@ -97,9 +102,11 @@ class User(UserMixin, db.Model):
         if self.email is not None and self.avatar_hash is None:
             self.avatar_hash = self.gravatar_hash()
 
+    def gravatar_hash(self):
+        return hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
 
-    def can(self,permissions):
-        return self.role is not None and (self.role.permissions & permissions) == permissions
+    def can(self,perm):
+        return self.role is not None and self.role.has_permission(perm)
 
 
     def is_administrator(self):
@@ -117,41 +124,6 @@ class User(UserMixin, db.Model):
             url=url, hash=hash, size=size, default=default, rating=rating
         )
 
-
-
-
-
-
-
-
-    # def generate_confirmation_token(self,expiration=3600):
-    #     """
-    #     生成一个令牌，有效期为一个小时
-    #     :param expiration:秘钥
-    #     :return:令牌字符串
-    #     """
-    #     s = Serializer(current_app.config['SECRET_KEY'],expiration)
-    #     # dumps为指定的数据生成一个加密签名，然后再对数据和密码进行格式化
-    #     return s.dumps({'confirm':self.id})
-
-
-    # def confirm(self,token):
-    #     """
-    #     验证令牌,还检查令牌中的用户是否和存储在current_user中的已经登录的用户匹配
-    #     :param token: 待验证的token
-    #     :return: 验证结果
-    #     """
-    #     s = Serializer(current_app.config['SECRET_KEY'])
-    #     try:
-    #         # loads检验签名和过期时间，如果通过，会返回原始数据，否则抛出异常
-    #         data = s.loads(token)
-    #     except:
-    #         return False
-    #     if data.get('confirm') != self.id:
-    #         return False
-    #     self.confirmed = True
-    #     db.session.add(self)
-    #     return True
 
     @property
     def password(self):
