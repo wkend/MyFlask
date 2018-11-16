@@ -21,7 +21,7 @@ class DevelopmentConfig(Config):
     MAIL_AUTHORIZATION_CODE = os.environ.get('MAIL_AUTHORIZATION_CODE')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
                               'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
-    FLASKY_ADMIN = 'wkend@qq.com'
+    FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
 
 
 class TestingConfig(Config):

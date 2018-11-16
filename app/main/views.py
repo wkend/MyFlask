@@ -14,6 +14,7 @@ from ..decorators import admin_required
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
+    """首页路由，处理博客文章"""
     form = PostForm()
     if current_user.can(Permission.WRITE) and form.validate_on_submit():
         post = Post(body=form.body.data,author=current_user._get_current_object())

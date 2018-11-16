@@ -19,13 +19,13 @@ from flask import current_app,request
 from flask_login import UserMixin,AnonymousUserMixin
 
 
-# 定义权限常亮
+# 定义权限常量
 class Permission:
-    FOLLOW = 0x01
-    COMMENT = 0x02
-    WRITE = 0x04
-    MODERATE_COMMENTS = 0x08
-    ADMINISTER = 0x80
+    FOLLOW = 0x01   # 关注其他用户的权限
+    COMMENT = 0x02  # 发表评论的权限
+    WRITE = 0x04    # 写原创文章的权限
+    MODERATE_COMMENTS = 0x08    # 查处他人发表的不当权限
+    ADMINISTER = 0x80   # 管理员权限
     ADMIN = 0x10
 
 
@@ -54,12 +54,17 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         """
-        通过角色名查找现有角色，然后再进行更新，只有当数据库中没有某个角色时才会创建角色
-        :return:
+        通过角色名查找现有角色，然后再进行更新，只有当数据库
+        有某个角色时才会创建角色
         """
         roles = {
-            'User':(Permission.FOLLOW|Permission.COMMENT|Permission.WRITE_ARTICLES,True),
-            'Moderate':(Permission.FOLLOW|Permission.COMMENT|Permission.WRITE_ARTICLES|Permission.MODERATE_COMMENTS,False),
+            'User':(Permission.FOLLOW|
+                    Permission.COMMENT|
+                    Permission.WRITE,True),
+            'Moderate':(Permission.FOLLOW|
+                        Permission.COMMENT|
+                        Permission.WRITE|
+                        Permission.MODERATE_COMMENTS,False),
             'Administrator':(0xff,False)
         }
         for r in roles:
@@ -70,7 +75,6 @@ class Role(db.Model):
             role.default = roles[r][1]
             db.session.add(role)
         db.session.commit()
-
 
 
 class User(UserMixin, db.Model):
@@ -87,7 +91,7 @@ class User(UserMixin, db.Model):
     # 明，这列的值是 roles 表中行的 id 值。
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     avatar_hash = db.Column(db.String(32))
-    posts = db.relationship('Post',backref='auth',lazy='dynamic')
+    posts = db.relationship('Post',backref='author',lazy='dynamic')
     # # 确认用户账户
     # confirmed = db.Column(db.Boolean,default=False)
 
