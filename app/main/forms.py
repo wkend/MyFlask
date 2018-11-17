@@ -1,11 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField,BooleanField,SelectField
+from wtforms import StringField, SubmitField, TextAreaField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, Regexp
 from wtforms import ValidationError
 from ..models import Role, User
 
-
 """定义表单类"""
+
+
 class NameForm(FlaskForm):
     """
     使用Flask-WTF时，每个Web表单都由一个继承自Form的类表示。这个类定义表单中的
@@ -14,19 +15,21 @@ class NameForm(FlaskForm):
     """
     # StringField类表示属性为 type="text" 的 <input> 元素
     # validators指定一个验证函数的列表，DataRequired确保提交的字段不为空
-    name = StringField('What is your name?',validators=[DataRequired()])
+    name = StringField('What is your name?', validators=[DataRequired()])
     # SubmitField类表示属性为 type="submit" 的<input> 元素
     submit = SubmitField('Submit')
 
 
 class EditProfileForm(FlaskForm):
     """普通用户资料编辑表单"""
-    name = StringField('Real name',validators=[Length(0,64)])
-    location = StringField('Location',validators=[Length(0,64)])
+    name = StringField('Real name', validators=[Length(0, 64)])
+    location = StringField('Location', validators=[Length(0, 64)])
     about_me = TextAreaField('About me')
     submit = SubmitField('Submit')
 
+
 class EditProfileAdminForm(FlaskForm):
+    """管理员用户编辑表单"""
     email = StringField('Email', validators=[DataRequired(), Length(1, 64),
                                              Email()])
     username = StringField('Username', validators=[
@@ -60,5 +63,5 @@ class EditProfileAdminForm(FlaskForm):
 
 class PostForm(FlaskForm):
     """博客文章表单"""
-    body = TextAreaField("What's on your minds?",validators=[DataRequired()])
+    body = TextAreaField("What's on your minds?", validators=[DataRequired()])
     submit = SubmitField('submit')
