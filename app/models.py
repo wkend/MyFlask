@@ -12,12 +12,11 @@ from flask_login import UserMixin, AnonymousUserMixin
 
 # 定义权限常量
 class Permission:
-    FOLLOW = 0x01  # 关注其他用户的权限
-    COMMENT = 0x02  # 发表评论的权限
-    WRITE = 0x04  # 写原创文章的权限
-    MODERATE_COMMENTS = 0x08  # 查处他人发表的不当权限
-    ADMINISTER = 0x80  # 管理员权限
-    ADMIN = 0x10
+    FOLLOW = 1  # 关注其他用户的权限
+    COMMENT = 2  # 发表评论的权限
+    WRITE = 4  # 写原创文章的权限
+    MODERATE = 8  # 查处他人发表的不当权限
+    ADMIN = 16  # 管理员权限
 
 
 class Role(db.Model):
@@ -34,12 +33,6 @@ class Role(db.Model):
     # 建立关系，第一个参数代表关系的另一端是哪个模型，backref向User模型中添加一个role属性,lazy参数取消自助执行查询
     users = db.relationship('User', backref='role', lazy='dynamic')
 
-    def has_permission(self, perm):
-        return self.permissions and perm == perm
-
-    def __repr__(self):
-        return '<Role %r>' % self.name
-
     @staticmethod
     def insert_roles():
         """
@@ -47,23 +40,47 @@ class Role(db.Model):
         有某个角色时才会创建角色
         """
         roles = {
-            'User': (Permission.FOLLOW |
-                     Permission.COMMENT |
-                     Permission.WRITE, True),
-            'Moderate': (Permission.FOLLOW |
-                         Permission.COMMENT |
-                         Permission.WRITE |
-                         Permission.MODERATE_COMMENTS, False),
-            'Administrator': (0xff, False)
+            'User': [Permission.FOLLOW,
+                     Permission.COMMENT,
+                     Permission.WRITE],
+            'Moderate': [Permission.FOLLOW,
+                         Permission.COMMENT,
+                         Permission.WRITE,
+                         Permission.MODERATE],
+            'Administrator': [Permission.FOLLOW,
+                              Permission.COMMENT,
+                              Permission.WRITE,
+                              Permission.MODERATE,
+                              Permission.ADMIN]
         }
+        default_role = 'User'
         for r in roles:
             role = Role.query.filter_by(name=r).first()
             if role is None:
                 role = Role(name=r)
-            role.permissions = roles[r][0]
-            role.default = roles[r][1]
+            role.reset_permissions()
+            for perm in roles[r]:
+                role.add_permissions(perm)
+            role.default = (role.name == default_role)
             db.session.add(role)
         db.session.commit()
+
+    def add_permissions(self, perm):
+        if not self.has_permission(perm):
+            self.permissions += perm
+
+    def remove_permissions(self, perm):
+        if self.has_permission(perm):
+            self.permissions -= perm
+
+    def reset_permissions(self):
+        self.permissions = 0
+
+    def has_permission(self, perm):
+        return self.permissions and perm == perm
+
+    def __repr__(self):
+        return '<Role %r>' % self.name
 
 
 class User(UserMixin, db.Model):
@@ -104,7 +121,7 @@ class User(UserMixin, db.Model):
         return self.role is not None and self.role.has_permission(perm)
 
     def is_administrator(self):
-        return self.can(Permission.ADMINISTER)
+        return self.can(Permission.ADMIN)
 
     def gravatar(self, size=100, default='identicon', rating='g'):
         """用户头像"""
@@ -112,6 +129,7 @@ class User(UserMixin, db.Model):
         hash = self.avatar_hash or self.gravatar_hash()
         return '{url}/{hash}?s={size}&d={default}&r={rating}'.format(
             url=url, hash=hash, size=size, default=default, rating=rating)
+
 
     @property
     def password(self):
