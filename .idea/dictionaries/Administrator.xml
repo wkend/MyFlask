@@ -6,6 +6,7 @@
       <w>gravatar</w>
       <w>identicon</w>
       <w>navbar</w>
+      <w>pagedown</w>
       <w>smtp</w>
       <w>sqlalchemy</w>
       <w>tablename</w>

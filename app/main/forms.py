@@ -3,10 +3,10 @@ from wtforms import StringField, SubmitField, TextAreaField, BooleanField, Selec
 from wtforms.validators import DataRequired, Length, Email, Regexp
 from wtforms import ValidationError
 from ..models import Role, User
+from flask_pagedown.fields import PageDownField
+
 
 """定义表单类"""
-
-
 class NameForm(FlaskForm):
     """
     使用Flask-WTF时，每个Web表单都由一个继承自Form的类表示。这个类定义表单中的
@@ -63,5 +63,5 @@ class EditProfileAdminForm(FlaskForm):
 
 class PostForm(FlaskForm):
     """博客文章表单"""
-    body = TextAreaField("What's on your minds?", validators=[DataRequired()])
+    body = PageDownField("What's on your minds?", validators=[DataRequired()])
     submit = SubmitField('submit')

@@ -6,7 +6,7 @@ from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 from flask_login import LoginManager
-
+from flask_pagedown import PageDown
 
 login_manager = LoginManager()
 login_manager.session_protection = 'strong' # 设定不同的设定等级
@@ -16,6 +16,8 @@ bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
+pagedown = PageDown()
+
 
 def create_app(config_name):
     """
@@ -25,6 +27,7 @@ def create_app(config_name):
     """
     app = Flask(__name__)
     login_manager.init_app(app)
+    pagedown.init_app(app)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 

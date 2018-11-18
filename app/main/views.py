@@ -1,10 +1,8 @@
 """蓝本中定义的程序路由"""
 
 from datetime import datetime
-
 from flask import render_template, session, redirect, url_for, current_app, flash, abort, request
 from flask_login import login_required, current_user
-
 from .. import db
 from ..models import User, Role, Permission, Post
 from . import main
