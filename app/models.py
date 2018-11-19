@@ -132,7 +132,6 @@ class User(UserMixin, db.Model):
         return '{url}/{hash}?s={size}&d={default}&r={rating}'.format(
             url=url, hash=hash, size=size, default=default, rating=rating)
 
-
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
@@ -203,6 +202,7 @@ class Post(db.Model):
         target.body_html = bleach.linkify(bleach.clean(
             markdown(value, output_format='html'),
             tags=allowed_tags, strip=True))
+
 
 # on_changed_body注册在body字段上，是 SQLAlchemy“set”事件的监听程序
 db.event.listen(Post.body, 'set', Post.on_changed_body)
