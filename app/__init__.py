@@ -9,7 +9,7 @@ from flask_login import LoginManager
 from flask_pagedown import PageDown
 
 login_manager = LoginManager()
-login_manager.session_protection = 'strong' # 设定不同的设定等级
+login_manager.session_protection = 'strong'  # 设定不同的设定等级
 login_manager.login_view = 'auth.login'
 
 bootstrap = Bootstrap()
@@ -22,8 +22,7 @@ pagedown = PageDown()
 def create_app(config_name):
     """
     程序工厂函数
-    :param config: 配置文件名
-    :return:
+    :param config_name: 配置文件名
     """
     app = Flask(__name__)
     login_manager.init_app(app)
@@ -31,11 +30,10 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
-
     bootstrap.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
-    db.init_app(app)    #完成对之前创建的对象的初始化
+    db.init_app(app)  # 完成对之前创建的对象的初始化
     # 附加路由和自定义的错误页面
 
     # 注册蓝本
@@ -44,7 +42,6 @@ def create_app(config_name):
 
     # 附加蓝本
     from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint,url_prefix='/auth')
-
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
     return app

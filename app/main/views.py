@@ -92,3 +92,21 @@ def post(id):
     """博客文章的固定连接"""
     post = Post.query.get_or_404(id)
     return render_template('post.html',posts=[post])
+
+
+@main.route('/edit/<int:id>',methods=['GET','POST'])
+@login_required
+def edit(id):
+    """允许博客文章的作者编辑文章"""
+    post = Post.query.get_or_404(id)
+    if current_user != post.author and not current_user.can(Permission.ADMIN):
+        abort(404)
+    form = PostForm()
+    if form.validate_on_submit():
+        post.body = form.body.data
+        db.session.add(post)
+        db.session.commit()
+        flash('The article has been updated.')
+        return redirect(url_for('.post',id=post.id))
+    form.body.data = post.body
+    return render_template('edit_post.html',form=form)
