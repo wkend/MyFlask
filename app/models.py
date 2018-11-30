@@ -85,6 +85,13 @@ class Role(db.Model):
         return '<Role %r>' % self.name
 
 
+class Follow(db.Model):
+    table_name = 'follows'
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'  # 指定表名
     id = db.Column(db.Integer, primary_key=True)
@@ -103,6 +110,16 @@ class User(UserMixin, db.Model):
 
     # # 确认用户账户
     # confirmed = db.Column(db.Boolean,default=False)
+
+    # 使用两个一对多关系实现多对多关系
+    followed = db.relationship('Follow', foreign_keys=[Follow.follower_id],
+                               backref=db.backref('follower', lazy='joined'),
+                               lazy='dynamic', cascade='all,delete-orphan')
+    followers = db.relationship('Follow', foreign_keys=[Follow.followed_id],
+                               backref=db.backref('followed', lazy='joined'),
+                               lazy='dynamic', cascade='all,delete-orphan')
+
+
 
     def __init__(self, **kwargs):
         """定义默认的用户角色"""
@@ -157,6 +174,25 @@ class User(UserMixin, db.Model):
         """刷新用户的最后访问时间"""
         self.last_seen = datetime.utcnow()
         db.session.add(self)
+
+    def follow(self,user):
+        if not self.is_following(user):
+            f = Follow(followed=user)
+            self.followed.append(f)
+
+    def unfollow(self,user):
+        f = self.followed.filter_by(followed_id=user.id).first()
+        if f:
+            self.followed.remove(f)
+
+    def is_following(self,user):
+        if user.id is None:
+            return False
+
+    def is_followed_by(self,user):
+        if user.id is None:
+            return False
+        return self.followers.filter_by(follower_id=user.id).first() is not None
 
     def __repr__(self):
         return '<User %r>' % self.username

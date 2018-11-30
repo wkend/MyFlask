@@ -7,7 +7,7 @@ from .. import db
 from ..models import User, Role, Permission, Post
 from . import main
 from .forms import EditProfileForm, PostForm, EditProfileAdminForm
-from ..decorators import admin_required
+from ..decorators import admin_required, permission_required
 
 
 @main.route('/', methods=['GET', 'POST'])
@@ -22,12 +22,12 @@ def index():
         return redirect(url_for('.index'))
 
     # 分页显示博客文章列表
-    page= request.args.get('page',1,type=int)
+    page = request.args.get('page', 1, type=int)
     pagination = Post.query.order_by(Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
-    return render_template('index.html', form=form, posts=posts,pagination=pagination)
+    return render_template('index.html', form=form, posts=posts, pagination=pagination)
 
 
 @main.route('/user/<username>')
@@ -91,10 +91,10 @@ def edit_profile_admin(id):
 def post(id):
     """博客文章的固定连接"""
     post = Post.query.get_or_404(id)
-    return render_template('post.html',posts=[post])
+    return render_template('post.html', posts=[post])
 
 
-@main.route('/edit/<int:id>',methods=['GET','POST'])
+@main.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit(id):
     """允许博客文章的作者编辑文章"""
@@ -107,6 +107,58 @@ def edit(id):
         db.session.add(post)
         db.session.commit()
         flash('The article has been updated.')
-        return redirect(url_for('.post',id=post.id))
+        return redirect(url_for('.post', id=post.id))
     form.body.data = post.body
-    return render_template('edit_post.html',form=form)
+    return render_template('edit_post.html', form=form)
+
+
+@main.route('/follow/<username>')
+@login_required
+@permission_required(Permission.FOLLOW)
+def follow(username):
+    """关注路由和视图函数"""
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('Invalid user.')
+        return redirect(url_for('.index'))
+    if current_user.is_following(user):
+        flash('You are following this user.')
+        redirect(url_for('.user', username=username))
+    current_user.follow(user)
+    flash('You are following %s.' % user)
+    return redirect(url_for('.user', username=username))
+
+
+@main.route('/followers/<username>')
+def followers(username):
+    """关注者路由和视图函数"""
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('Invalid user.')
+        return redirect(url_for('.index'))
+    page = request.args.get('page', 1, type=int)
+    pagination = user.followers.paginate(
+        page, per_page=current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
+        error_out=False
+    )
+    follows = [{'user': item.follower, 'timestamp': item.timetamp}
+               for item in pagination.items]
+    return render_template('followers.html', pagination=pagination, follows=follows)
+
+
+@main.route('/followed-by/<username>')
+def followed_by(username):
+    """被关注者路由和视图函数"""
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('Invalid user')
+        return redirect(url_for('.index'))
+    page = request.args.get('page', 1, type=int)
+    pagination = user.followed.paginate(
+        page, per_page=current_app.config['FLASKY_FOLLOWERS_PRE_PAGE'], error_out=False
+    )
+    follows = [{'user': item.followed, 'timestamp': item.timetamp}
+               for item in pagination.items]
+    return render_template('followers.html', user=user, title='Followed by',
+                           endpoint='.followed_by', pagination=pagination,
+                           follows=follows)
