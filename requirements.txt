@@ -21,7 +21,7 @@ cryptography==2.3.1
 cssselect==1.0.3
 decorator==4.3.0
 defusedxml==0.5.0
-Django==2.1.2
+Django==2.2.13
 dominate==2.3.4
 entrypoints==0.2.3
 Flask==1.0.2
